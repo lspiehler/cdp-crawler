@@ -2,7 +2,7 @@ let poller = require('./lib/poll');
 let credentials = require('./credentials');
 let fs = require('fs');
 var credentialcachetimer;
-var writefrequency = 60000;
+var writefrequency = 1000;
 
 let enableWriteCacheTimer = function() {
     credentialcachetimer = setTimeout(function() {
@@ -29,6 +29,7 @@ let writeCache = function(timeronly) {
 }
 
 var pollHost = function(host, callback) {
+    enableWriteCacheTimer();
     fs.stat('./cache/credentialcache.js', function (err, data) {
         if (err) {
             //console.log('no cached credentials');
@@ -41,8 +42,12 @@ var pollHost = function(host, callback) {
                 if(err) {
                     callback(err, false);
                 } else {
-                    credentialcache[poll.getHostname().toUpperCase()] = resp;
-                    credentialcache[host] = resp;
+                    credentialcache[poll.getHostname().toUpperCase()] = {
+                        snmp: resp
+                    }
+                    credentialcache[host] = {
+                        snmp: resp
+                    }
                     poll.getOID("1.3.6.1.2.1.1.6.0", function(err, syslocation) {
                         if(err) {
                             callback(err, false);
@@ -67,6 +72,8 @@ var pollHost = function(host, callback) {
                                                 networks: networks
                                             });
                                         }
+                                        disableWriteCacheTimer();
+                                        writeCache();
                                         poll.closeSession(function() {
                                             //session closed
                                         });
