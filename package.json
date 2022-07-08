@@ -1,0 +1,36 @@
+{
+  "name": "cdp-crawler",
+  "version": "0.0.1",
+  "description": "Discover and crawl the network using SNMP and Cisco CDP",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lspiehler/cdp-crawler.git"
+  },
+  "keywords": [
+    "cdp",
+    "snmp",
+    "crawl",
+    "discover"
+  ],
+  "author": "Lyas Spiehler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lspiehler/cdp-crawler/issues"
+  },
+  "homepage": "https://github.com/lspiehler/cdp-crawler#readme",
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "dotenv": "^16.0.1",
+    "net-snmp": "^3.8.2",
+    "netmask": "^2.0.2",
+    "ssh2": "^1.11.0",
+    "ssh2-streams": "^0.4.10"
+  }
+}
