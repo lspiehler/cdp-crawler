@@ -9,7 +9,7 @@ var handler = new handlerlib();
 let seeds = config.seeds
 let exclusions = config.exclusions
 
-console.log(seeds);
+//console.log(seeds);
 
 handler.run(seeds, exclusions, function(err, resp) {
     if(err) {
