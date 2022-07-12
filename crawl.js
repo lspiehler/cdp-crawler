@@ -36,8 +36,11 @@ handler.run(seeds, exclusions, function(err, resp) {
                 {id: 'source', title: 'source'},
                 {id: 'platform', title: 'platform'},
                 {id: 'deviceId', title: 'deviceId'},
+                {id: 'sshresult', title: 'ssh_result'},
+                {id: 'sshusername', title: 'ssh_username'},
                 {id: 'discoveredBy', title: 'discoveredBy'},
-                {id: 'discoveredNeighbors', title: 'discoveredNeighbors'}
+                {id: 'discoveredNeighbors', title: 'discoveredNeighbors'},
+                {id: 'sshhandshake', title: 'ssh_handshake'}
             ]
         });
         csvWriter.writeRecords(resp.devices)       // returns a promise
@@ -59,5 +62,13 @@ handler.run(seeds, exclusions, function(err, resp) {
             .then(() => {
                 console.log('...Done');
         });
+
+        if(config.getexcluded) {
+            fs.writeFile('./reports/excluded.js', JSON.stringify(resp.excluded, null, 4), function (err) {
+                if(err) {
+                    console.log(err);
+                }
+            });
+        }
     }
 });
