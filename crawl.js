@@ -32,6 +32,8 @@ handler.run(seeds, exclusions, function(err, resp) {
                 {id: 'name', title: 'name'},
                 {id: 'status', title: 'status'},
                 {id: 'ip', title: 'ip'},
+                {id: 'snmpauth', title: 'snmpuser'},
+                {id: 'snmpversion', title: 'snmpversion'},
                 {id: 'location', title: 'location'},
                 {id: 'source', title: 'source'},
                 {id: 'platform', title: 'platform'},
