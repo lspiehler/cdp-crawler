@@ -2,6 +2,7 @@ var fs = require('fs');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 var handlerlib = require("./lib/handler");
 var config = require('./config');
+const dbpool = require('./lib/db_conn');
 
 var handler = new handlerlib();
 
@@ -70,6 +71,8 @@ handler.run(seeds, exclusions, function(err, resp) {
                 if(err) {
                     console.log(err);
                 }
+                dbpool.getPool().end();
+                console.log(resp.errors);
             });
         }
     }

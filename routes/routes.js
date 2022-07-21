@@ -29,6 +29,7 @@ router.post('/adhoc_scan', (req, res, next) => {
 	//res.render('admin/admin-dashboard', { layout: 'admin', user: req.user });
     let adhoc = new adhoc_scan();
     adhoc.scan({host: req.body.host}, function(err, result) {
+        //console.log(result);
         res.json(result);
     });
 });

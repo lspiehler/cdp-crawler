@@ -30,5 +30,10 @@ module.exports = {
     seeds: parseArray(process.env.SEEDS) || [],
     exclusions: parseArray(process.env.PLATFORMEXCLUSIONS) || [],
     getexcluded: getBoolean(process.env.GETEXCLUDED) || false,
-    tacacsuser: process.env.TACACSUSER || false
+    tacacsuser: process.env.TACACSUSER || false,
+    DBHOST: process.env.DBHOST || false,
+    DBUSER: process.env.DBUSER,
+    DBPASS: process.env.DBPASS,
+    DBNAME: process.env.DBNAME,
+    DBPORT: process.env.DBPORT || 3306
 }
