@@ -56,6 +56,7 @@ handler.run(seeds, exclusions, function(err, resp) {
             header: [
                 {id: 'network', title: 'network'},
                 {id: 'cidr', title: 'cidr'},
+                {id: 'location', title: 'location'},
                 {id: 'name', title: 'name'},
                 {id: 'ip', title: 'ip'},
                 {id: 'mask', title: 'mask'}
