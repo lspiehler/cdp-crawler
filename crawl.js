@@ -27,12 +27,18 @@ handler.run(seeds, exclusions, function(err, resp) {
                 console.log(err);
             }
         });
+        fs.writeFile('./reports/arp.js', JSON.stringify(resp.arp, null, 4), function (err) {
+            if(err) {
+                console.log(err);
+            }
+        });
         const csvWriter = createCsvWriter({
             path: './reports/devices.csv',
             header: [
-                {id: 'name', title: 'name'},
+                {id: 'hostname', title: 'name'},
                 {id: 'status', title: 'status'},
                 {id: 'ip', title: 'ip'},
+                {id: 'stackmembercount', title: 'stackmembercount'},
                 {id: 'snmpuser', title: 'snmpauth'},
                 {id: 'snmpversion', title: 'snmpversion'},
                 {id: 'location', title: 'location'},
@@ -57,6 +63,8 @@ handler.run(seeds, exclusions, function(err, resp) {
                 {id: 'network', title: 'network'},
                 {id: 'cidr', title: 'cidr'},
                 {id: 'location', title: 'location'},
+                {id: 'hosts', title: 'hosts'},
+                {id: 'size', title: 'size'},
                 {id: 'name', title: 'name'},
                 {id: 'ip', title: 'ip'},
                 {id: 'mask', title: 'mask'}
