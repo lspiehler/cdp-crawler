@@ -1,3 +1,4 @@
+var Netmask = require('netmask').Netmask
 const fs = require('fs');
 let config = require('../config');
 const db = require('../lib/database');
@@ -8,24 +9,32 @@ var processNetworks = function(networks, index, callback) {
     }
     if(index < networks.length) {
         //console.log(networks[index]);
+        let block = new Netmask(networks[index].network + '/' + networks[index].cidr);
+        //processNetworks(networks, index + 1, callback);
         let sql = `INSERT INTO \`crawler_networks\` (
             \`network\`,
             \`cidr\`,
             \`location\`,
             \`source\`,
+            \`first_address\`,
+            \`last_address\`,
             \`name\`,
             \`ip\`,
             \`mask\`,
             \`hosts\`,
+            \`size\`,
             \`first_added\`,
             \`last_added\`)
             VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
             ON DUPLICATE KEY UPDATE
             \`hosts\` = VALUES(\`hosts\`),
             \`source\` = VALUES(\`source\`),
+            \`first_address\` = VALUES(\`first_address\`),
+            \`last_address\` = VALUES(\`last_address\`),
             \`name\` = VALUES(\`name\`),
             \`ip\` = VALUES(\`ip\`),
+            \`size\` = VALUES(\`size\`),
             \`last_added\` = NOW()
             `
         let keys = Object.keys(networks[index].location);
@@ -33,12 +42,8 @@ var processNetworks = function(networks, index, callback) {
             if(keys[i] != "") {
                 //console.log(networks[index].location[keys[i]].ip);
                 //console.log(networks[index].location[i]);
-                let values = [networks[index].network, networks[index].cidr, keys[i], 'cdp_crawler', networks[index].location[keys[i]].name.join(', '), networks[index].location[keys[i]].ip.join(', '), networks[index].mask, networks[index].hosts];
+                let values = [networks[index].network, networks[index].cidr, keys[i], 'cdp_crawler', block.first, block.last, networks[index].location[keys[i]].name.join(', '), networks[index].location[keys[i]].ip.join(', '), networks[index].mask, networks[index].location[keys[i]].hosts, networks[index].size];
                 db.insert(sql, values, function(err, results, rows, sql) {
-                    /*if(networks[index].network == "192.168.64.0") {
-                        console.log(networks[index]);
-                        console.log(sql);
-                    }*/
                     if(err) {
                         callback(err);
                         return;

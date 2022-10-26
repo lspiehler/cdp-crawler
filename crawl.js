@@ -16,6 +16,7 @@ handler.run(seeds, exclusions, function(err, resp) {
     if(err) {
         console.log(err);
     } else {
+        //process.exit();
         //console.log(resp);
         fs.writeFile('./reports/devices.js', JSON.stringify(resp.devices, null, 4), function (err) {
             if(err) {
