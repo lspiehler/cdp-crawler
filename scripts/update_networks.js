@@ -21,12 +21,14 @@ var processNetworks = function(networks, index, callback) {
             \`name\`,
             \`ip\`,
             \`mask\`,
+            \`hostmask\`,
+            \`broadcast\`,
             \`hosts\`,
             \`size\`,
             \`first_added\`,
             \`last_added\`)
             VALUES
-            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+            (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
             ON DUPLICATE KEY UPDATE
             \`hosts\` = VALUES(\`hosts\`),
             \`source\` = VALUES(\`source\`),
@@ -34,6 +36,8 @@ var processNetworks = function(networks, index, callback) {
             \`last_address\` = VALUES(\`last_address\`),
             \`name\` = VALUES(\`name\`),
             \`ip\` = VALUES(\`ip\`),
+            \`hostmask\` = VALUES(\`hostmask\`),
+            \`broadcast\` = VALUES(\`broadcast\`),
             \`size\` = VALUES(\`size\`),
             \`last_added\` = NOW()
             `
@@ -42,7 +46,7 @@ var processNetworks = function(networks, index, callback) {
             if(keys[i] != "") {
                 //console.log(networks[index].location[keys[i]].ip);
                 //console.log(networks[index].location[i]);
-                let values = [networks[index].network, networks[index].cidr, keys[i], 'cdp_crawler', block.first, block.last, networks[index].location[keys[i]].name.join(', '), networks[index].location[keys[i]].ip.join(', '), networks[index].mask, networks[index].location[keys[i]].hosts, networks[index].size];
+                let values = [networks[index].network, networks[index].cidr, keys[i], 'cdp_crawler', block.first, block.last, networks[index].location[keys[i]].name.join(', '), networks[index].location[keys[i]].ip.join(', '), networks[index].mask, block.hostmask, block.broadcast, networks[index].location[keys[i]].hosts, networks[index].size];
                 db.insert(sql, values, function(err, results, rows, sql) {
                     if(err) {
                         callback(err);
