@@ -28,6 +28,7 @@ function getBoolean(str) {
 
 module.exports = {
     seeds: parseArray(process.env.SEEDS) || [],
+    getroutes: parseArray(process.env.GETROUTES) || [],
     exclusions: parseArray(process.env.PLATFORMEXCLUSIONS) || [],
     getexcluded: getBoolean(process.env.GETEXCLUDED) || false,
     tacacsuser: process.env.TACACSUSER || false,

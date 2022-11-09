@@ -9,10 +9,11 @@ var handler = new handlerlib();
 //let seeds = ['10.254.20.1'];
 let seeds = config.seeds
 let exclusions = config.exclusions
+let getroutes = config.getroutes
 
 //console.log(seeds);
 
-handler.run(seeds, exclusions, function(err, resp) {
+handler.run(seeds, exclusions, getroutes, function(err, resp) {
     if(err) {
         console.log(err);
     } else {
@@ -24,6 +25,11 @@ handler.run(seeds, exclusions, function(err, resp) {
             }
         });
         fs.writeFile('./reports/networks.js', JSON.stringify(resp.networks, null, 4), function (err) {
+            if(err) {
+                console.log(err);
+            }
+        });
+        fs.writeFile('./reports/routes.js', JSON.stringify(resp.routes, null, 4), function (err) {
             if(err) {
                 console.log(err);
             }
