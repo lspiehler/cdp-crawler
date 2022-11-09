@@ -32,6 +32,9 @@ var processNetworks = function(networks, index, callback) {
                     overlaparray.push(overlap[i].network + '/' + overlap[i].cidr + ' at ' + overlap[i].location);
                 }
                 sqloverlap = overlaparray.join(',');
+                if(sqloverlap.length > 500) {
+                    sqloverlap = sqloverlap.substring(0, 495) + "...";
+                }
             }
         } else {
             sqloverlap = 'ignored';
