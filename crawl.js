@@ -13,6 +13,8 @@ let getroutes = config.getroutes
 
 //console.log(seeds);
 
+if (process.env.DEBUG == "TRUE") console.log("starting crawl at " + Date());
+
 handler.run(seeds, exclusions, getroutes, function(err, resp) {
     if(err) {
         console.log(err);
